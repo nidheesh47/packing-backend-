@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import apiRoutes from "./routes/v1/api.routes.js";
-import webhookRoutes from "./routes/v1/webhookRoutes/webhook.routes.js";
+
 // Load environment variables
 dotenv.config();
 
@@ -54,10 +54,16 @@ app.use(cors(corsOptions));
 // BODY PARSER
 // ==============================
 // Standard JSON parser, but preserve raw body for webhooks
-app.use("/api/webhooks", express.raw({ type: "*/*" }));
-
-// ✅ Webhook routes
-app.use("/api/webhooks", webhookRoutes);
+app.use(
+  express.json({
+    verify: (req, res, buf) => {
+      // Save raw body for webhook endpoints
+      if (req.originalUrl && req.originalUrl.includes("/webhooks")) {
+        req.rawBody = buf;
+      }
+    },
+  }),
+);
 
 // ==============================
 // HEALTH CHECK
