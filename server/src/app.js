@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import apiRoutes from "./routes/v1/api.routes.js";
-
+import webhookRoutes from "./routes/v1/webhookRoutes/webhook.routes.js";
 // Load environment variables
 dotenv.config();
 
