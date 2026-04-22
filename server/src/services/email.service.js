@@ -8,6 +8,7 @@ import {
   getSupportTeamTemplate,
   getCustomerConfirmationTemplate,
   getPasswordResetTemplate,
+  getOtpLoginTemplate,
 } from "./emailTemplates.js";
 
 // Create reusable transporter object using Gmail service
@@ -140,5 +141,22 @@ export const sendPasswordResetEmail = async (email, newPassword, role) => {
   } catch (error) {
     console.error("❌ Failed to send password reset email:", error);
     throw new Error("Failed to send password reset email");
+  }
+};
+
+export const sendOtpLoginEmail = async (email, otp) => {
+  try {
+    await transporter.sendMail({
+      from: `"Acharya IT Team" <${process.env.MAIL_USER}>`,
+      to: email,
+      subject: "🔐 Your Login OTP",
+      html: getOtpLoginTemplate(otp),
+    });
+
+    console.log(`✅ OTP email sent to ${email}`);
+    return { success: true };
+  } catch (error) {
+    console.error("❌ Failed to send OTP email:", error);
+    throw new Error("Failed to send OTP email");
   }
 };

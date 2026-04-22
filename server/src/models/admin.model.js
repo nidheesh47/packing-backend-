@@ -19,9 +19,6 @@ const AdminSchema = new mongoose.Schema(
       required: true,
       lowercase: true,
       index: true,
-
-      // ❗ EMAIL MUST BE UNIQUE PER SHOP (not global)
-      // We will enforce compound index below
     },
 
     password: {
@@ -37,14 +34,14 @@ const AdminSchema = new mongoose.Schema(
       index: true,
     },
 
-    // 🔑 SHOP OWNERSHIP (ALL USERS)
+    // 🔑 SHOP OWNERSHIP
     shop_domain: {
       type: String,
       index: true,
       required: true,
     },
 
-    // 🛍️ SHOPIFY CONFIG (ADMIN ONLY)
+    // 🛍️ SHOPIFY CONFIG
     shopify: {
       shop_domain: {
         type: String,
@@ -62,6 +59,13 @@ const AdminSchema = new mongoose.Schema(
 
     is_active: { type: Boolean, default: true },
     must_change_password: { type: Boolean, default: false },
+
+    // ✅ 🔐 OTP LOGIN SUPPORT (NEW)
+    otp: {
+      code: { type: String }, // ✅ no select:false
+      expiresAt: Date,
+      attempts: { type: Number, default: 0 },
+    },
   },
   { timestamps: true },
 );
@@ -70,7 +74,7 @@ const AdminSchema = new mongoose.Schema(
 AdminSchema.index({ email: 1, shop_domain: 1 }, { unique: true });
 
 //
-// HASH PASSWORD
+// 🔐 HASH PASSWORD
 //
 AdminSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
@@ -78,7 +82,7 @@ AdminSchema.pre("save", async function () {
 });
 
 //
-// COMPARE PASSWORD
+// 🔐 COMPARE PASSWORD
 //
 AdminSchema.methods.comparePassword = async function (password) {
   return bcrypt.compare(password, this.password);

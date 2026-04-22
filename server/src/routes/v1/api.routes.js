@@ -6,6 +6,7 @@ import packingRoutes from "./packingRoutes/packing.routes.js";
 import skuRoutes from "./skuRoutes/sku.routes.js";
 import authRoutes from "./authRoutes/auth.routes.js";
 import orderRoutes from "./orderRoutes/order.routes.js";
+import otpRoutes from "./otpRoutes/otp.routes.js";
 const router = express.Router();
 
 router.use("/auth", authRoutes);
@@ -23,5 +24,7 @@ router.use("/packing", packingRoutes);
 router.use("/sku", skuRoutes);
 
 router.use("/order", orderRoutes);
+
+router.use("/otp", otpRoutes);
 
 export default router;

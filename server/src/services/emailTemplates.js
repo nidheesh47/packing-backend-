@@ -355,3 +355,143 @@ export const getPasswordResetTemplate = (
 </body>
 </html>
 `;
+
+/**
+ * Template for OTP Login Email
+ */
+export const getOtpLoginTemplate = (otp, expiryMinutes = 5) => `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .header {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      padding: 30px;
+      text-align: center;
+    }
+    .header h1 {
+      color: white;
+      margin: 0;
+      font-size: 26px;
+      font-weight: bold;
+    }
+    .content {
+      padding: 30px;
+    }
+    .otp-box {
+      background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+      border-radius: 12px;
+      padding: 25px;
+      text-align: center;
+      margin: 25px 0;
+      border: 1px solid #e5e7eb;
+    }
+    .otp {
+      font-size: 32px;
+      font-weight: bold;
+      letter-spacing: 6px;
+      color: #3b82f6;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      display: inline-block;
+      border: 1px solid #e5e7eb;
+      font-family: 'Courier New', monospace;
+    }
+    .info {
+      background-color: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    .warning {
+      background-color: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    .footer {
+      background-color: #f9fafb;
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #6b7280;
+      border-top: 1px solid #e5e7eb;
+    }
+    .divider {
+      height: 1px;
+      background-color: #e5e7eb;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <div class="header">
+      <h1>🔐 Secure Login OTP</h1>
+      <p style="color:white;">Use this code to access your account</p>
+    </div>
+
+    <div class="content">
+      <h2>Hello,</h2>
+
+      <p>We received a request to log in to your account. Use the OTP below to continue:</p>
+
+      <div class="otp-box">
+        <p><strong>Your One-Time Password</strong></p>
+        <div class="otp">${otp}</div>
+        <p style="margin-top:10px; font-size:14px; color:#6b7280;">
+          Valid for ${expiryMinutes} minutes
+        </p>
+      </div>
+
+      <div class="info">
+        <p><strong>ℹ️ Instructions:</strong></p>
+        <p>• Enter this OTP in the login screen</p>
+        <p>• Do not share this code with anyone</p>
+      </div>
+
+      <div class="warning">
+        <p><strong>⚠️ Security Alert:</strong></p>
+        <p>If you did not request this login, please ignore this email or contact support immediately.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <p style="font-size: 13px; color: #6b7280;">
+        Need help?<br>
+        📧 it@acharyapanchakarma.com<br>
+        📞 +91 8075146088
+      </p>
+    </div>
+
+    <div class="footer">
+      <p>This is an automated email from Acharya Pack and Scan.</p>
+      <p>© ${new Date().getFullYear()} Acharya Pack and Scan. All rights reserved.</p>
+    </div>
+
+  </div>
+</body>
+</html>
+`;

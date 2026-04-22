@@ -1,11 +1,11 @@
 import crypto from "crypto";
 import { getWebhookSecret } from "../utils/shopifyWebhook.cache.js";
 
-export const verifyShopifyWebhook = (req, res, next) => {
+export const verifyShopifyWebhook = async (req, res, next) => {
   const hmac = req.headers["x-shopify-hmac-sha256"];
   const shop = req.headers["x-shopify-shop-domain"];
 
-  const secret = getWebhookSecret(shop);
+  const secret = await getWebhookSecret(shop);
   if (!hmac || !secret) return res.status(401).send("Unauthorized");
 
   const generatedHash = crypto
@@ -19,3 +19,4 @@ export const verifyShopifyWebhook = (req, res, next) => {
     res.status(401).send("Forbidden");
   }
 };
+ 
